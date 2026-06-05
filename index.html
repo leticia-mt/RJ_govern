@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IVIBE</title>
     <style>
         * {
@@ -14,7 +14,9 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
-            overflow: hidden;
+            /* Changed to allow vertical scrolling when mobile keyboard layout changes */
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #3a2a3a 50%, #2d2d2d 75%, #1a1a1a 100%);
         }
@@ -67,15 +69,9 @@
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            33% {
-                transform: translate(30px, -30px) scale(1.1);
-            }
-            66% {
-                transform: translate(-20px, 20px) scale(0.9);
-            }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
         }
 
         /* Subtle hair strand decorations */
@@ -103,12 +99,8 @@
         .strand:nth-child(6) { left: 90%; animation-delay: 2.5s; height: 190px; }
 
         @keyframes sway {
-            0%, 100% {
-                transform: rotate(0deg);
-            }
-            50% {
-                transform: rotate(5deg);
-            }
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(5deg); }
         }
 
         /* Main container */
@@ -117,7 +109,7 @@
             z-index: 1;
             width: 100%;
             max-width: 1200px;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0 auto;
             padding: 40px 20px;
             display: flex;
@@ -134,13 +126,13 @@
         }
 
         .header h1 {
-            font-size: 2.8em;
-            font-weight: 300;
-            color: #01579b;
-            letter-spacing: 3px;
+            font-size: 2.5em;
+            font-weight: 400;
+            color: #e0e0e0; /* Changed from dark blue to light gray for readability on dark theme */
+            letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 20px rgba(218, 165, 32, 0.3);
+            text-shadow: 2px 2px 20px rgba(218, 165, 32, 0.4);
         }
 
         .header p {
@@ -154,10 +146,11 @@
         .chatbot-container {
             width: 100%;
             max-width: 900px;
-            height: calc(100vh - 200px);
-            min-height: 700px;
+            height: 70vh; /* Scaled to viewport height */
+            min-height: 550px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
             border: 1px solid rgba(218, 165, 32, 0.2);
             box-shadow: 
@@ -167,6 +160,7 @@
             overflow: hidden;
             position: relative;
             animation: fadeInUp 1s ease;
+            -webkit-overflow-scrolling: touch; /* Smooth mobile scrolling if needed */
         }
 
         .chatbot-container::before {
@@ -183,6 +177,7 @@
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
 
         /* Decorative corner accents */
@@ -212,61 +207,36 @@
 
         /* Animations */
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 10px;
+                justify-content: flex-start; /* Prevents center clipping on small devices */
             }
 
             .header h1 {
-                font-size: 2em;
-                letter-spacing: 2px;
-            }
-
-            .header p {
-                font-size: 0.95em;
+                font-size: 1.8em;
+                letter-spacing: 1px;
             }
 
             .chatbot-container {
-                height: calc(100vh - 150px);
+                height: 75vh;
+                min-height: auto; /* Removes the rigid 700px height block */
                 border-radius: 15px;
             }
 
             .corner-accent {
-                width: 50px;
-                height: 50px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.6em;
-                letter-spacing: 1px;
-            }
-
-            .header {
-                margin-bottom: 20px;
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
@@ -288,20 +258,17 @@
 
     <div class="container">
         <div class="header">
-            <h1>IVIBE Plano de Governo do Estado do Rio de Janeiro  </h1>
-            <p> </p>
+            <h1>IVIBE Plano de Governo do Estado do Rio de Janeiro</h1>
         </div>
 
         <div class="chatbot-container">
             <div class="corner-accent top-left"></div>
             <div class="corner-accent bottom-right"></div>
-           <iframe
-    src="https://www.chatbase.co/chatbot-iframe/ajuhDG3DsajlrrVv_I5Fr"
-    width="100%"
-    style="height: 100%; min-height: 700px"
-    frameborder="0"
-    allow="microphone"
-></iframe>
+            <iframe
+                src="https://www.chatbase.co/chatbot-iframe/ajuhDG3DsajlrrVv_I5Fr"
+                width="100%"
+                allow="microphone">
+            </iframe>
         </div>
     </div>
 </body>
